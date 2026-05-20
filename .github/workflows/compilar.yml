@@ -25,6 +25,9 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Configurar SDK de Android y Aceptar Licencias
+        uses: android-actions/setup-android@v3
+
       - name: Crear Aplicación Android (.apk) sin preguntas
         run: |
           flet build apk --no-interactive
