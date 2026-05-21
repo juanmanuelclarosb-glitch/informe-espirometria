@@ -15,27 +15,27 @@ jobs:
 
       - name: Instalar herramientas necesarias
         run: |
-          pip install flet
-          pip install python-docx
-          pip install requests
+          pip install flet python-docx requests
 
-      - name: Configurar Java (Requerido para Android)
+      - name: Configurar Java 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: '17'
 
       - name: Configurar SDK de Android
         uses: android-actions/setup-android@v3
 
-      - name: Crear Aplicación Android (.apk) sin preguntas
+      - name: Aceptar Licencias de Android de forma expresa
         run: |
-          flet build apk --no-interactive || true
+          yes | sdkmanager --licenses || true
 
-      - name: Guardar el instalador final (Búsqueda Flexible)
+      - name: Crear Aplicación Android (.apk)
+        run: |
+          flet build apk --no-interactive
+
+      - name: Guardar el instalador final
         uses: actions/upload-artifact@v4
         with:
           name: Aplicacion-Espirometria-APK
-          path: |
-            build/apk/*.apk
-            *.apk
+          path: build/apk/*.apk
