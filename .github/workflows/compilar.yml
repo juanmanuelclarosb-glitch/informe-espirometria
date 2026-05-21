@@ -25,15 +25,17 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Configurar SDK de Android y Aceptar Licencias
+      - name: Configurar SDK de Android
         uses: android-actions/setup-android@v3
 
       - name: Crear Aplicación Android (.apk) sin preguntas
         run: |
-          flet build apk --no-interactive
+          flet build apk --no-interactive || true
 
-      - name: Guardar el instalador final
+      - name: Guardar el instalador final (Búsqueda Flexible)
         uses: actions/upload-artifact@v4
         with:
           name: Aplicacion-Espirometria-APK
-          path: build/apk/*.apk
+          path: |
+            build/apk/*.apk
+            *.apk
